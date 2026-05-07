@@ -1,0 +1,49 @@
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    color: #fff;
+    background: #f0f2f5;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: url('/images/login-background.png') center center / cover no-repeat;
+    filter: blur(8px); z-index: -2;
+}
+
+body::after {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(106,17,203,0.4), rgba(37,117,252,0.4)); z-index: -1;
+}
+
+/* Sidebar */
+.sidebar { width: 240px; height: 100vh; position: fixed; top: 0; left: 0; background: rgba(20,30,48,0.95); backdrop-filter: blur(8px); box-shadow: 4px 0 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; }
+.sidebar-content { flex-grow: 1; overflow-y: auto; padding-top: 25px; }
+.sidebar h3 { color: #fff; text-transform: uppercase; text-align: center; margin-bottom: 1rem; }
+.sidebar a { color: #ccc; display: flex; align-items: center; gap: 12px; padding: 12px 20px; margin: 6px 12px; border-radius: 12px; font-weight: 500; text-decoration: none; }
+.sidebar a:hover, .sidebar .active { background: linear-gradient(135deg,#6a11cb,#2575fc); color: #fff; transform: translateX(5px); }
+.sidebar-logout { padding: 20px; text-align: center; }
+
+/* Content */
+.content { margin-left: 240px; padding: 30px; color: #222; }
+.btn-primary { background: linear-gradient(135deg,#6a11cb,#2575fc); border: none; border-radius: 10px; padding: 10px 20px; font-weight: 500; }
+
+/* Stat Cards */
+.stat-card { border-radius: 20px; padding: 25px; text-align: center; color: #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+.stat-card h3 { font-size: 32px; font-weight: 700; }
+.stat-blue { background: linear-gradient(135deg,#2193b0,#6dd5ed); }
+.stat-green { background: linear-gradient(135deg,#56ab2f,#a8e063); }
+.stat-orange { background: linear-gradient(135deg,#ff8008,#ffc837); }
+.stat-red { background: linear-gradient(135deg,#e53935,#e35d5b); }
+
+/* Table */
+.card { border: none; border-radius: 20px; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.card-header { background: transparent; font-weight: 600; font-size: 18px; }
+table thead { background: #f9fafb; }
+table tbody tr:hover { background: #f3f6fa; transition: background 0.2s; }
+td button { display: inline-flex; margin-right: 6px; }

@@ -1,0 +1,149 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="fr">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Gestion des Matériels</title>-->
+<!--    <style>-->
+<!--        body { font-family: Arial, sans-serif; margin: 20px; }-->
+<!--        table { border-collapse: collapse; width: 100%; margin-top: 20px; }-->
+<!--        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }-->
+<!--        th { background-color: #f2f2f2; }-->
+<!--        input, select, button { margin: 5px; padding: 5px; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h1>Gestion des Matériels</h1>-->
+
+<!--<h2>Ajouter / Modifier Matériel</h2>-->
+<!--<form id="materielForm">-->
+<!--    <input type="hidden" id="idMateriel">-->
+<!--    <input type="text" id="nom" placeholder="Nom" required>-->
+<!--    <input type="text" id="description" placeholder="Description" required>-->
+<!--    <input type="number" id="quantite" placeholder="Quantité" required>-->
+<!--    <input type="text" id="etat" placeholder="État" required>-->
+<!--    <input type="date" id="dateAcquisition" required>-->
+<!--    <input type="text" id="categorie" placeholder="Catégorie" required>-->
+<!--    <button type="submit">Enregistrer</button>-->
+<!--    <button type="button" onclick="resetForm()">Annuler</button>-->
+<!--</form>-->
+
+<!--<h2>Liste des Matériels</h2>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>Nom</th>-->
+<!--        <th>Description</th>-->
+<!--        <th>Quantité</th>-->
+<!--        <th>État</th>-->
+<!--        <th>Date Acquisition</th>-->
+<!--        <th>Catégorie</th>-->
+<!--        <th>Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody id="materielsTableBody">-->
+<!--    &lt;!&ndash; Les lignes seront générées par JavaScript &ndash;&gt;-->
+<!--    </tbody>-->
+<!--</table>-->
+
+<!--<script>-->
+<!--    const apiUrl = '/api/materiels';-->
+
+<!--    // Récupérer et afficher tous les matériels-->
+<!--    function loadMateriels() {-->
+<!--        fetch(apiUrl)-->
+<!--            .then(res => res.json())-->
+<!--            .then(data => {-->
+<!--                const tbody = document.getElementById('materielsTableBody');-->
+<!--                tbody.innerHTML = '';-->
+<!--                data.forEach(m => {-->
+<!--                    const row = document.createElement('tr');-->
+<!--                    row.innerHTML = `-->
+<!--                        <td>${m.idMateriel}</td>-->
+<!--                        <td>${m.nom}</td>-->
+<!--                        <td>${m.description}</td>-->
+<!--                        <td>${m.quantite}</td>-->
+<!--                        <td>${m.etat}</td>-->
+<!--                        <td>${m.dateAcquisition ? m.dateAcquisition.split('T')[0] : ''}</td>-->
+<!--                        <td>${m.categorie ? m.categorie.nom : ''}</td>-->
+<!--                        <td>-->
+<!--                            <button onclick="editMateriel(${m.idMateriel})">Modifier</button>-->
+<!--                            <button onclick="deleteMateriel(${m.idMateriel})">Supprimer</button>-->
+<!--                        </td>-->
+<!--                    `;-->
+<!--                    tbody.appendChild(row);-->
+<!--                });-->
+<!--            });-->
+<!--    }-->
+
+<!--    // Supprimer un matériel-->
+<!--    function deleteMateriel(id) {-->
+<!--        if(!confirm('Voulez-vous vraiment supprimer ce matériel ?')) return;-->
+<!--        fetch(`${apiUrl}/${id}`, { method: 'DELETE' })-->
+<!--            .then(() => loadMateriels());-->
+<!--    }-->
+
+<!--    // Préparer le formulaire pour modifier-->
+<!--    function editMateriel(id) {-->
+<!--        fetch(`${apiUrl}/${id}`)-->
+<!--            .then(res => res.json())-->
+<!--            .then(m => {-->
+<!--                document.getElementById('idMateriel').value = m.idMateriel;-->
+<!--                document.getElementById('nom').value = m.nom;-->
+<!--                document.getElementById('description').value = m.description;-->
+<!--                document.getElementById('quantite').value = m.quantite;-->
+<!--                document.getElementById('etat').value = m.etat;-->
+<!--                document.getElementById('dateAcquisition').value = m.dateAcquisition ? m.dateAcquisition.split('T')[0] : '';-->
+<!--                document.getElementById('categorie').value = m.categorie ? m.categorie.nom : '';-->
+<!--            });-->
+<!--    }-->
+
+<!--    // Réinitialiser le formulaire-->
+<!--    function resetForm() {-->
+<!--        document.getElementById('materielForm').reset();-->
+<!--        document.getElementById('idMateriel').value = '';-->
+<!--    }-->
+
+<!--    // Ajouter ou modifier un matériel-->
+<!--    document.getElementById('materielForm').addEventListener('submit', function(e) {-->
+<!--        e.preventDefault();-->
+<!--        const id = document.getElementById('idMateriel').value;-->
+<!--        const materiel = {-->
+<!--            nom: document.getElementById('nom').value,-->
+<!--            description: document.getElementById('description').value,-->
+<!--            quantite: parseInt(document.getElementById('quantite').value),-->
+<!--            etat: document.getElementById('etat').value,-->
+<!--            dateAcquisition: document.getElementById('dateAcquisition').value,-->
+<!--            categorie: { nom: document.getElementById('categorie').value }-->
+<!--        };-->
+
+<!--        if(id) {-->
+<!--            // Modifier-->
+<!--            fetch(`${apiUrl}/${id}`, {-->
+<!--                method: 'PUT',-->
+<!--                headers: { 'Content-Type': 'application/json' },-->
+<!--                body: JSON.stringify(materiel)-->
+<!--            }).then(() => {-->
+<!--                resetForm();-->
+<!--                loadMateriels();-->
+<!--            });-->
+<!--        } else {-->
+<!--            // Ajouter-->
+<!--            fetch(apiUrl, {-->
+<!--                method: 'POST',-->
+<!--                headers: { 'Content-Type': 'application/json' },-->
+<!--                body: JSON.stringify(materiel)-->
+<!--            }).then(() => {-->
+<!--                resetForm();-->
+<!--                loadMateriels();-->
+<!--            });-->
+<!--        }-->
+<!--    });-->
+
+<!--    // Initialisation-->
+<!--    loadMateriels();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->

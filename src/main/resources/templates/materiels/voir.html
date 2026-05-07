@@ -1,0 +1,58 @@
+<!-- templates/materiels/voir.html -->
+<div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Détails du Matériel</h2>
+        <a th:href="@{/materiels}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Informations du matériel</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>#</th>
+                    <td th:text="${materiel.idMateriel}">1</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td th:text="${materiel.nom}">Laptop Dell</td>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <td th:text="${materiel.categorie.nom}">Informatique</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td th:text="${materiel.description}">Ordinateur portable pour bureau</td>
+                </tr>
+                <tr>
+                    <th>Quantité</th>
+                    <td th:text="${materiel.quantite}">15</td>
+                </tr>
+                <tr>
+                    <th>Date d'acquisition</th>
+                    <td th:text="${#dates.format(materiel.dateAcquisition,'dd/MM/yyyy')}">25/08/2025</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-3">
+                <a th:href="@{/materiels/edit/{id}(id=${materiel.idMateriel})}"
+                   class="btn btn-warning" sec:authorize="hasRole('ADMIN')">
+                    <i class="fa-solid fa-pen"></i> Modifier
+                </a>
+
+                <form th:action="@{/materiels/delete/{id}(id=${materiel.idMateriel})}"
+                      method="post" style="display:inline;" sec:authorize="hasRole('ADMIN')">
+                    <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce matériel ?');">
+                        <i class="fa-solid fa-trash"></i> Supprimer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

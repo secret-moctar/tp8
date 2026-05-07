@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Matériel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f0f2f5; }
+        .card { border-radius: 20px; }
+        .card-header { border-radius: 20px 20px 0 0; font-weight: 600; font-size: 18px; }
+        .btn-primary, .btn-success { border-radius: 10px; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Modifier un Matériel</h4>
+        </div>
+        <div class="card-body">
+            <!-- Formulaire POST sur /materiels/edit/{id} -->
+            <form th:action="@{'/materiels/edit/' + ${materiel.idMateriel}}" th:object="${materiel}" method="post">
+
+                <!-- CSRF Token -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                <!-- Nom -->
+                <div class="mb-3">
+                    <label class="form-label">Nom du matériel</label>
+                    <input type="text" th:field="*{nom}" class="form-control" required>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea th:field="*{description}" class="form-control" rows="3"></textarea>
+                </div>
+
+                <!-- Catégorie -->
+                <div class="mb-3">
+                    <label class="form-label">Catégorie</label>
+                    <select th:field="*{idCategorie}" class="form-select" required>
+                        <option value="" disabled>-- Sélectionner une catégorie --</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.idCategorie}"
+                                th:text="${cat.nom}"
+                                th:selected="${materiel.categorie != null} ? ${cat.idCategorie} == ${materiel.categorie.idCategorie} : false">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Quantité -->
+                <div class="mb-3">
+                    <label class="form-label">Quantité</label>
+                    <input type="number" th:field="*{quantite}" class="form-control" min="1" required>
+                </div>
+
+                <!-- Date d'acquisition -->
+                <div class="mb-3">
+                    <label class="form-label">Date d’acquisition</label>
+                    <input type="date" th:field="*{dateAcquisition}" class="form-control" required>
+                </div>
+
+                <!-- Boutons -->
+                <div class="d-flex justify-content-between">
+                    <a th:href="@{/materiels}" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-success">Mettre à jour</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

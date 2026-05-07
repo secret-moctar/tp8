@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détail Mouvement</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Détail du Mouvement</h1>
+
+    <table class="detail-table">
+        <tr>
+            <th>ID</th>
+            <td th:text="${mouvement.id}"></td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td th:text="${mouvement.type}"></td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td th:text="${#dates.format(mouvement.date, 'dd/MM/yyyy HH:mm')}"></td>
+        </tr>
+        <tr>
+            <th>Matériel</th>
+            <td th:text="${mouvement.materiel.nom}"></td>
+        </tr>
+        <tr>
+            <th>Quantité</th>
+            <td th:text="${mouvement.quantite}"></td>
+        </tr>
+        <tr>
+            <th>Utilisateur</th>
+            <td th:text="${mouvement.utilisateur.nom}"></td>
+        </tr>
+        <tr>
+            <th>Remarques</th>
+            <td th:text="${mouvement.remarque}"></td>
+        </tr>
+    </table>
+
+    <div class="actions">
+        <a class="btn" th:href="@{/mouvements}">Retour à la liste</a>
+        <a class="btn" th:href="@{'/mouvements/edit/' + ${mouvement.id}}">Modifier</a>
+        <form th:action="@{'/mouvements/delete/' + ${mouvement.id}}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

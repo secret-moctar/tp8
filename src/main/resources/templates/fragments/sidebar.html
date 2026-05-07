@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+</head>
+<body>
+<div th:fragment="sidebar">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <h3>Inventaire</h3>
+
+            <!-- Dashboard (accessible à tous les rôles) -->
+            <a th:href="@{/dashboard}"
+               th:classappend="${activePage == 'dashboard'} ? ' active'">
+                <i class="fa-solid fa-gauge"></i> Dashboard
+            </a>
+
+            <!-- Matériels (GESTIONNAIRE, UTILISATEUR uniquement) -->
+            <a th:href="@{/materiels}"
+               sec:authorize="hasAnyRole('GESTIONNAIRE','UTILISATEUR')"
+               th:classappend="${activePage == 'materiels'} ? ' active'">
+                <i class="fa-solid fa-box"></i> Matériels
+            </a>
+
+            <!-- Catégories (GESTIONNAIRE uniquement) -->
+            <a th:href="@{/categories}"
+               sec:authorize="hasRole('GESTIONNAIRE')"
+               th:classappend="${activePage == 'categories'} ? ' active'">
+                <i class="fa-solid fa-tags"></i> Catégories
+            </a>
+
+            <!-- Mouvements (GESTIONNAIRE uniquement) -->
+            <a th:href="@{/mouvements}"
+               sec:authorize="hasRole('GESTIONNAIRE')"
+               th:classappend="${activePage == 'mouvements'} ? ' active'">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i> Mouvements
+            </a>
+
+            <!-- Prêts (GESTIONNAIRE, UTILISATEUR uniquement) -->
+            <a th:href="@{/prets}"
+               sec:authorize="hasAnyRole('GESTIONNAIRE','UTILISATEUR')"
+               th:classappend="${activePage == 'prets'} ? ' active'">
+                <i class="fa-solid fa-handshake"></i> Prêts
+            </a>
+
+            <!-- Utilisateurs (ADMIN uniquement) -->
+            <a th:href="@{/utilisateurs}"
+               sec:authorize="hasRole('ADMIN')"
+               th:classappend="${activePage == 'utilisateurs'} ? ' active'">
+                <i class="fa-solid fa-users"></i> Utilisateurs
+            </a>
+
+            <!-- Rôles & Permissions (ADMIN uniquement) -->
+            <a th:href="@{/roles}"
+               sec:authorize="hasRole('ADMIN')"
+               th:classappend="${activePage == 'roles'} ? ' active'">
+                <i class="fa-solid fa-user-shield"></i> Rôles & Permissions
+            </a>
+
+            <!-- Rapports (GESTIONNAIRE uniquement) -->
+            <a th:href="@{/rapports}"
+               sec:authorize="hasRole('GESTIONNAIRE')"
+               th:classappend="${activePage == 'rapports'} ? ' active'">
+                <i class="fa-solid fa-chart-line"></i> Rapports
+            </a>
+
+            <!-- Historique (GESTIONNAIRE uniquement) -->
+            <a th:href="@{/historique}"
+               sec:authorize="hasRole('GESTIONNAIRE')"
+               th:classappend="${activePage == 'historique'} ? ' active'">
+                <i class="fa-solid fa-clock-rotate-left"></i> Historique
+            </a>
+
+            <!-- Paramètres (ADMIN uniquement, facultatif) -->
+            <a th:href="@{/parametres}"
+               sec:authorize="hasRole('ADMIN')"
+               th:classappend="${activePage == 'parametres'} ? ' active'">
+                <i class="fa-solid fa-gear"></i> Paramètres
+            </a>
+        </div>
+        <!-- Bouton Déconnexion -->
+        <div class="logout-section text-center mb-4">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger w-75">
+                    <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
